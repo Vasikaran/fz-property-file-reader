@@ -3,8 +3,7 @@ const fs = require('fs');
 class PropertyFileReader{
     constructor(filePath) {
         this.filePath = filePath;
-        console.log(filePath.search('.property'));
-        if (filePath.search('.property') !== -1){
+        if (filePath.search('.property') === -1){
             throw 'only .property file types allowed'
         }
         this.properties = {};
@@ -44,6 +43,10 @@ class PropertyFileReader{
     }
 
     set(key, value){
+        if (this.properties[key]){
+            let err = key + ' already exists. if you want to update ' + key + ' use update method';
+            throw err;
+        }
         this.properties[key] = value;
     }
 
