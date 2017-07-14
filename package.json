@@ -1,0 +1,19 @@
+{
+  "name": "fz-property-file-reader",
+  "version": "1.0.0",
+  "description": "for access property file",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vasikaran/fz-property-file-reader.git"
+  },
+  "author": "Vasikaran S <vasikaran.25@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vasikaran/fz-property-file-reader/issues"
+  },
+  "homepage": "https://github.com/Vasikaran/fz-property-file-reader#readme"
+}
