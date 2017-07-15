@@ -3,7 +3,7 @@ const fs = require('fs');
 class PropertyFileReader{
     constructor(filePath) {
         this.filePath = filePath;
-        if (filePath.search('.property') === -1){
+        if (filePath.search('.properties') === -1){
             throw 'only .property file types allowed'
         }
         this.properties = {};
@@ -12,15 +12,28 @@ class PropertyFileReader{
 
     parse(){
         var properties = this.readFile();
-        properties = properties.replace(/ /g, '');
-        properties = properties.split('\n');
-        properties.forEach(property=>{
-            if (property.split('=')[0] !== ''){
+        if (properties.indexOf('\r') !== -1){
+            this.splitBy = '\r';
+            properties = properties.split(this.splitBy);
+        }else if(properties.indexOf('\n') !== -1){
+            this.splitBy = '\n';
+            properties = properties.split(this.splitBy);
+        }
+        var count = 1;
+        properties.forEach((property, index)=>{
+            if (property.search('=') !== -1){
+                property = property.replace(/ /g, '');
                 let [ key, value ] = property.split('=');
-                if (value.search('\r')){
-                    value = value.split('\r')[0];
-                }
                 this.properties[key] = value;
+            }else if(property === ''){
+                this.properties['__empty' + index] = '';
+            }else{
+                if (this.properties[property] === ''){
+                    this.properties[property + '__peoperty__reader' + count] = '';
+                    count++;
+                }else{
+                    this.properties[property] = '';
+                }
             }
         })
     }
@@ -39,11 +52,22 @@ class PropertyFileReader{
     }
 
     getAll(){
-        return this.properties;
+        let filterProperties = {};
+        Object.keys(this.properties).forEach(property=>{
+            let value = this.properties[property];
+            if (value){
+                filterProperties[property] = value
+            }
+        })
+        return filterProperties;
+    }
+
+    has(key){
+        return this.properties[key] ? true : false;
     }
 
     set(key, value){
-        if (this.properties[key]){
+        if (this.has(key)){
             let err = key + ' already exists. if you want to update ' + key + ' use update method';
             throw err;
         }
@@ -57,7 +81,16 @@ class PropertyFileReader{
     push(){
         let content = "";
         Object.keys(this.properties).forEach(key=>{
-            content += key + '=' + this.properties[key] + '\n';
+            if (key.search('__empty') === 0){
+                content += this.splitBy;
+            }else if(this.properties[key] === ''){
+                if (key.search('__peoperty__reader') !== -1){
+                    key = key.split('__peoperty__reader')[0];
+                }
+                content += key + this.splitBy;
+            }else{
+                content += key + '=' + this.properties[key] + this.splitBy;
+            }
         })
         fs.writeFileSync(this.filePath, content, 'utf-8');
     }

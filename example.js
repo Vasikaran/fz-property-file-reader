@@ -1,6 +1,6 @@
 const propertyReader = require('./src/index');
 
-var prop = propertyReader('./sample.property');
+var prop = propertyReader('./sample.properties');
 
 console.log(prop.get('name'));
 
@@ -8,11 +8,15 @@ console.log(prop.getAll());
 
 console.log(prop.getRaw());
 
-prop.set('age', 20);
+prop.update('age', 20);
 
 prop.update('age', 40);
 
-prop.push();
+console.log(prop.has('age'), 'has');
 
+prop.update('name', 'karan');
+prop.update('role', 'developer');
+prop.push();
+prop.set('age', 50); // throw error
 
 var prop = propertyReader('./sample.');

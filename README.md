@@ -1,2 +1,2 @@
 # fz-property-file-reader
-for access property file
+This library using for access property file. You can read, write property file by using it.
