@@ -26,13 +26,13 @@ class PropertyFileReader{
                 let [ key, value ] = property.split('=');
                 this.properties[key] = value;
             }else if(property === ''){
-                this.properties['__empty' + index] = '';
+                this.properties['__empty' + index] = '__peoperty__reader';
             }else{
-                if (this.properties[property] === ''){
-                    this.properties[property + '__peoperty__reader' + count] = '';
+                if (this.properties[property] === '__peoperty__reader'){
+                    this.properties[property + '__peoperty__reader' + count] = '__peoperty__reader';
                     count++;
                 }else{
-                    this.properties[property] = '';
+                    this.properties[property] = '__peoperty__reader';
                 }
             }
         })
@@ -55,7 +55,7 @@ class PropertyFileReader{
         let filterProperties = {};
         Object.keys(this.properties).forEach(property=>{
             let value = this.properties[property];
-            if (value){
+            if (value !== '__peoperty__reader'){
                 filterProperties[property] = value
             }
         })
@@ -83,7 +83,7 @@ class PropertyFileReader{
         Object.keys(this.properties).forEach(key=>{
             if (key.search('__empty') === 0){
                 content += this.splitBy;
-            }else if(this.properties[key] === ''){
+            }else if(this.properties[key] === '__peoperty__reader'){
                 if (key.search('__peoperty__reader') !== -1){
                     key = key.split('__peoperty__reader')[0];
                 }
@@ -96,7 +96,11 @@ class PropertyFileReader{
     }
 
     getKeys(){
-        return Object.keys(this.properties);
+        return Object.keys(this.properties).filter(key=>{
+            if (this.properties[key] !== '__peoperty__reader'){
+                return key;
+            }
+        });
     }
 }
 

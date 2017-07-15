@@ -14,6 +14,8 @@ prop.update('age', 40);
 
 console.log(prop.has('age'), 'has');
 
+console.log(prop.getKeys());
+
 prop.update('name', 'karan');
 prop.update('role', 'developer');
 prop.push();
