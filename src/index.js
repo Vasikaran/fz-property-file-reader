@@ -75,6 +75,10 @@ class PropertyFileReader{
     }
 
     update(key, value){
+        if (!this.has(key)){
+            let err = key + ' doesn"t exists. if you want to set ' + key + ' use set method';
+            throw err;
+        }
         this.properties[key] = value;
     }
 
