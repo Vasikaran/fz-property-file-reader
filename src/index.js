@@ -4,7 +4,7 @@ class PropertyFileReader{
     constructor(filePath) {
         this.filePath = filePath;
         if (filePath.search('.properties') === -1){
-            throw 'only .property file types allowed'
+            throw 'only .properties file types allowed'
         }
         this.properties = {};
         this.parse();

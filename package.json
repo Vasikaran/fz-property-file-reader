@@ -1,6 +1,6 @@
 {
   "name": "fz-property-file-reader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "for access property file",
   "main": "./src/index.js",
   "scripts": {
