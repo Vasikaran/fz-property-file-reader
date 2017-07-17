@@ -3,6 +3,12 @@
   "version": "1.0.6",
   "description": "for access property file",
   "main": "./lib/index.js",
+  "keywords": [
+      "property file",
+      "properties file",
+      "property to json",
+      "json parser"
+  ],
   "scripts": {
     "build": "babel src -d lib",
     "test": "jest"
