@@ -5,7 +5,7 @@ This library using for access property file. You can read, write property file b
 
 ## Installation
 
-You can install the fz-property-file-reader from npm by running:
+You can install the fz-property-file-reader from npm by running.    
 
 ```sh
 npm install --save fz-property-file-reader
@@ -15,6 +15,14 @@ npm install --save fz-property-file-reader
 
 ```js
 var propertyReader = require('fz-property-file-reader');
+
+`Params -  property file's absolute path`
+
+`Params type - key : string`
+
+`Return - instance object`
+
+`Return type - object`
 
 var prop = propertyReader('sample.properties'); // for example
 ```
@@ -90,6 +98,24 @@ prop.has(key);
 
 Pass the key to this method, it will returns you key is there or not.
 
+### Remove
+
+`Params - key`
+
+`Params type - string`
+
+`Return - none`
+
+`Return type - none`
+
+```js
+// Usage
+
+prop.remove(key);
+```
+
+Pass the key to this method, it will remove value of key to your properties file. If there is no key, it will throws the `key doesn't exists` error.
+
 ### GetAll
 
 `Params - none`
@@ -164,4 +190,4 @@ Just call this method, it will returns your properties file without parse.
 
 ## Conclusion
 
-If you find any errors in this, please let me know about it by using raise issue. 
+If you find any errors in this, please let me know about it by using raise issue.

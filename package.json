@@ -1,10 +1,20 @@
 {
   "name": "fz-property-file-reader",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "for access property file",
-  "main": "./src/index.js",
+  "main": "./lib/index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "babel src -d lib",
+    "test": "jest"
+  },
+  "jest": {
+    "bail": true,
+    "notify": true
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
   },
   "repository": {
     "type": "git",
@@ -15,5 +25,12 @@
   "bugs": {
     "url": "https://github.com/Vasikaran/fz-property-file-reader/issues"
   },
-  "homepage": "https://github.com/Vasikaran/fz-property-file-reader#readme"
+  "homepage": "https://github.com/Vasikaran/fz-property-file-reader#readme",
+  "dependencies": {
+    "babel-core": "^6.25.0",
+    "babel-jest": "^20.0.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-jest": "^20.0.3",
+    "jest": "^19.0.2"
+  }
 }

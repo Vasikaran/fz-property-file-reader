@@ -1,6 +1,6 @@
-const propertyReader = require('./src/index');
+const propertyReader = require('../lib/index');
 
-var prop = propertyReader('./sample.properties');
+var prop = propertyReader('./example.properties');
 
 console.log(prop.get('name'));
 

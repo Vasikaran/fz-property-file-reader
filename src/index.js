@@ -7,32 +7,27 @@ class PropertyFileReader{
             throw 'only .properties file types allowed'
         }
         this.properties = {};
-        this.parse();
+        this.propertyToJsonParser();
     }
 
-    parse(){
-        var properties = this.readFile();
-        if (properties.indexOf('\r') !== -1){
-            this.splitBy = '\r';
-            properties = properties.split(this.splitBy);
-        }else if(properties.indexOf('\n') !== -1){
-            this.splitBy = '\n';
-            properties = properties.split(this.splitBy);
-        }
-        var count = 1;
-        properties.forEach((property, index)=>{
-            if (property.search('=') !== -1){
-                property = property.replace(/ /g, '');
-                let [ key, value ] = property.split('=');
-                this.properties[key] = value;
-            }else if(property === ''){
+    propertyToJsonParser(){
+        let file = this.readFile();
+        this.nextLine = process.platform === 'win32' ? '\r\n' : '\n';
+        let lines = file.split(this.nextLine);
+        let count = 1;
+        lines.forEach((line, index)=>{
+            if (line.search('=') !== -1){
+                // line = line.replace(/ /g, '');
+                let [ key, value ] = line.split('=');
+                this.properties[key] = value ;
+            }else if(line === ''){
                 this.properties['__empty' + index] = '__peoperty__reader';
             }else{
-                if (this.properties[property] === '__peoperty__reader'){
-                    this.properties[property + '__peoperty__reader' + count] = '__peoperty__reader';
+                if (this.properties[line] === '__peoperty__reader'){
+                    this.properties[line + '__peoperty__reader' + count] = '__peoperty__reader';
                     count++;
                 }else{
-                    this.properties[property] = '__peoperty__reader';
+                    this.properties[line] = '__peoperty__reader';
                 }
             }
         })
@@ -49,6 +44,15 @@ class PropertyFileReader{
 
     get(key){
         return this.properties[key];
+    }
+
+    remove(key){
+        if(this.has(key)){
+            delete this.properties[key]
+        }else{
+            let err = key + ' doesn"t exists';
+            throw err;
+        }
     }
 
     getAll(){
@@ -86,14 +90,14 @@ class PropertyFileReader{
         let content = "";
         Object.keys(this.properties).forEach(key=>{
             if (key.search('__empty') === 0){
-                content += this.splitBy;
+                content += this.nextLine;
             }else if(this.properties[key] === '__peoperty__reader'){
                 if (key.search('__peoperty__reader') !== -1){
                     key = key.split('__peoperty__reader')[0];
                 }
-                content += key + this.splitBy;
+                content += key + this.nextLine;
             }else{
-                content += key + '=' + this.properties[key] + this.splitBy;
+                content += key + '=' + this.properties[key] + this.nextLine;
             }
         })
         fs.writeFileSync(this.filePath, content, 'utf-8');
