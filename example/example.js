@@ -21,4 +21,8 @@ prop.update('role', 'developer');
 prop.push();
 prop.set('age', 50); // throw error
 
+var num = Math.floor(Math.random() * 10);
+
+prop.update('role', 'developer');
+
 var prop = propertyReader('./sample.');

@@ -12,12 +12,11 @@ class PropertyFileReader{
 
     propertyToJsonParser(){
         let file = this.readFile();
-        this.nextLine = process.platform === 'win32' ? '\r\n' : '\n';
-        let lines = file.split(this.nextLine);
+        let lines = file.split('\n');
         let count = 1;
         lines.forEach((line, index)=>{
             if (line.search('=') !== -1){
-                // line = line.replace(/ /g, '');
+                line = line.replace(/ /g, '');
                 let [ key, value ] = line.split('=');
                 this.properties[key] = value ;
             }else if(line === ''){
@@ -88,16 +87,20 @@ class PropertyFileReader{
 
     push(){
         let content = "";
-        Object.keys(this.properties).forEach(key=>{
+        let keys = Object.keys(this.properties);
+        keys.forEach((key, index)=>{
             if (key.search('__empty') === 0){
-                content += this.nextLine;
+                // nothing
             }else if(this.properties[key] === '__peoperty__reader'){
                 if (key.search('__peoperty__reader') !== -1){
                     key = key.split('__peoperty__reader')[0];
                 }
-                content += key + this.nextLine;
+                content += key;
             }else{
-                content += key + '=' + this.properties[key] + this.nextLine;
+                content += key + '=' + this.properties[key];
+            }
+            if (index !== keys.length - 1) {
+                content += '\n';
             }
         })
         fs.writeFileSync(this.filePath, content, 'utf-8');
