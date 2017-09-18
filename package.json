@@ -1,6 +1,6 @@
 {
   "name": "fz-property-file-reader",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "for access property file",
   "main": "./lib/index.js",
   "keywords": [
@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "build": "babel src -d lib",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "npm run test && npm run build"
   },
   "jest": {
     "bail": true,

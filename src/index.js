@@ -16,9 +16,10 @@ class PropertyFileReader{
         let count = 1;
         lines.forEach((line, index)=>{
             if (line.search('=') !== -1){
-                line = line.replace(/ /g, '');
                 let [ key, value ] = line.split('=');
-                this.properties[key] = value ;
+                key = key.replace(/\s+/g, '');
+                value = value.trim();
+                this.properties[key] = value;
             }else if(line === ''){
                 this.properties['__empty' + index] = '__peoperty__reader';
             }else{
