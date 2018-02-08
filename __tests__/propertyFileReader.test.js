@@ -1,4 +1,4 @@
-import propertyReader from '../lib/index';
+import {propertyReader} from '../lib/index';
 import path from 'path';
 import fs from 'fs';
 

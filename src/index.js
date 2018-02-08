@@ -7,7 +7,7 @@ class PropertyFileReader{
         if (filePath.search('.properties') === -1){
             throw 'only .properties file types allowed'
         }
-        this.properties = this.propertyToJsonParser(this.readFile(this.filePath));
+        this.properties = propertyToJsonParser(this.readFile(this.filePath));
     }
 
     getRaw(){
