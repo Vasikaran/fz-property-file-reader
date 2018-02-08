@@ -1,4 +1,5 @@
-const fs = require('fs');
+let fs = require('fs');
+let propertyToJsonParser = require('./utils/propertyToJsonParser');
 
 class PropertyFileReader{
     constructor(filePath) {
@@ -6,31 +7,7 @@ class PropertyFileReader{
         if (filePath.search('.properties') === -1){
             throw 'only .properties file types allowed'
         }
-        this.properties = {};
-        this.propertyToJsonParser();
-    }
-
-    propertyToJsonParser(){
-        let file = this.readFile();
-        let lines = file.split('\n');
-        let count = 1;
-        lines.forEach((line, index)=>{
-            if (line.search('=') !== -1){
-                let [ key, value ] = line.split('=');
-                key = key.replace(/\s+/g, '');
-                value = value.trim();
-                this.properties[key] = value;
-            }else if(line === ''){
-                this.properties['__empty' + index] = '__peoperty__reader';
-            }else{
-                if (this.properties[line] === '__peoperty__reader'){
-                    this.properties[line + '__peoperty__reader' + count] = '__peoperty__reader';
-                    count++;
-                }else{
-                    this.properties[line] = '__peoperty__reader';
-                }
-            }
-        })
+        this.properties = this.propertyToJsonParser(this.readFile(this.filePath));
     }
 
     getRaw(){
@@ -120,4 +97,7 @@ let propertyReader = (filePath)=>{
     return new PropertyFileReader(filePath);
 }
 
-module.exports = propertyReader;
+module.exports = {
+    propertyReader: propertyReader,
+    propertyToJsonParser: propertyToJsonParser
+};
