@@ -1,6 +1,8 @@
 Fz Property File Reader
 =======================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Vasikaran/fz-property-file-reader.svg)](https://greenkeeper.io/)
+
 This library using for access property file. You can read, write property file by using it.
 
 ## Installation
