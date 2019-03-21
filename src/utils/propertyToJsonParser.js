@@ -6,7 +6,7 @@ let propertyToJsonParser = (propertyString)=>{
         if (line.search('=') !== -1){
             let [ key, value ] = line.split('=');
             key = key.replace(/\s+/g, '');
-            value = value.trim();
+            value = line.split(/^.*?=/)[1].trim();
             propertyObject[key] = value;
         }else if(line === ''){
             propertyObject['__empty' + index] = '__peoperty__reader';
